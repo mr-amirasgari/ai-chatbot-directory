@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="فهرست جامع ربات‌های چت هوش مصنوعی و ابزارهای بازنویسی — شامل لینک مستقیم، دسته‌بندی و پشتیبانی از فارسی">
+  <title>دایرکتوری ربات‌های هوش مصنوعی</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --card-bg: #ffffff;
+      --border: #e9ecef;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --success: #4cc9f0;
+      --persian: #f72585;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    body {
+      background-color: #fafbff;
+      color: var(--dark);
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .subtitle {
+      color: #6c757d;
+      font-size: 1.1rem;
+    }
+
+    .search-box {
+      max-width: 700px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+
+    #search {
+      width: 100%;
+      padding: 14px 20px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      font-size: 1.1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    #search:focus {
+      border-color: var(--primary);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: #e9ecef;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .logo-placeholder {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 14px;
+      /* رنگ پیش‌فرض — در جاوااسکریپت تغییر می‌کند */
+      background: var(--primary);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 14px;
+      flex-grow: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: #e9ecef;
+      color: #495057;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .tag.persian {
+      background: #ffe5ec;
+      color: var(--persian);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      h1 { font-size: 1.8rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>🤖 دایرکتوری ربات‌های هوش مصنوعی</h1>
+    <p class="subtitle">فهرستی از ربات‌های چت، ابزارهای بازنویسی و تحلیل متن — با پشتیبانی از فارسی</p>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="نام ربات یا کاربرد مورد نظر را جستجو کنید..." />
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p>تمامی نام‌ها و لوگوها متعلق به صاحبان اصلی خود هستند.</p>
+  </footer>
+
+  <script>
+    // تابع تولید رنگ بر اساس نام (ثابت برای هر نام)
+    function stringToColor(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      let color = '#';
+      for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xFF;
+        color += ('00' + value.toString(16)).substr(-2);
+      }
+      return color;
+    }
+
+    const aiTools = [
+      { name: "ChatGPT", url: "https://chat.openai.com", cat: ["Text", "Code", "Multilingual"], desc: "معروف‌ترین ربات چت توسط OpenAI — پشتیبانی خوب از فارسی", persian: true },
+      { name: "Claude", url: "https://claude.ai", cat: ["Text", "Document Analysis", "Code"], desc: "از Anthropic — قوی در تحلیل اسناد طولانی" },
+      { name: "Gemini", url: "https://gemini.google.com", cat: ["Text", "Image", "Code", "Multimodal"], desc: "ربات گوگل — یکپارچه با اکوسیستم گوگل" },
+      { name: "AI Studio", url: "https://aistudio.google.com", cat: ["Text", "Image", "API", "Developer"], desc: "پلتفرم توسعه‌ی گوگل برای مدل‌های Gemini" },
+      { name: "Qwen", url: "https://qwen.ai", cat: ["Text", "Code", "Multilingual", "RTL"], desc: "از Alibaba — پشتیبانی عالی از فارسی", persian: true },
+      { name: "Kimi", url: "https://kimi.moonshot.cn", cat: ["Text", "Web Search", "Long Context"], desc: "از Moonshot AI — حافظه بسیار بالا" },
+      { name: "Grok", url: "https://x.ai/grok", cat: ["Text", "Social", "Real-time"], desc: "ربات هوش مصنوعی ایلان ماسک در پلتفرم X" },
+      { name: "Perplexity", url: "https://www.perplexity.ai", cat: ["Search", "Research", "Text"], desc: "ترکیب جستجو + چت با منبع معتبر" },
+      { name: "Poe", url: "https://poe.com", cat: ["Text", "Multiple Models", "API"], desc: "از Quora — دسترسی به چندین مدل در یک پلتفرم" },
+      { name: "YouChat", url: "https://you.com", cat: ["Search", "Chat", "Apps"], desc: "ربات چت با امکان سوئیچ بین مدل‌ها" },
+      { name: "Firefly", url: "https://firefly.adobe.com", cat: ["Image", "Design", "Generative"], desc: "ابزار تولید تصویر توسط Adobe" },
+      { name: "DeepSeek", url: "https://deepseek.com", cat: ["Text", "Code", "Chinese"], desc: "ربات چینی قوی در کدنویسی" },
+      { name: "QuillBot", url: "https://quillbot.com", cat: ["Paraphrasing", "Grammar"], desc: "محبوب‌ترین ابزار بازنویسی متن" },
+      { name: "Wordtune", url: "https://www.wordtune.com", cat: ["Paraphrasing", "Tone"], desc: "بازنویسی هوشمند با تنظیم لحن" },
+      { name: "Smodin", url: "https://smodin.io/rewriter", cat: ["Paraphrasing", "Multilingual"], desc: "پشتیبانی از فارسی برای بازنویسی", persian: true },
+      { name: "TextFixer", url: "https://textfixer.com", cat: ["RTL", "Text Cleanup"], desc: "ابزار رایگان برای راست‌چین و مرتب‌سازی متن فارسی", persian: true },
+      { name: "Copilot", url: "https://copilot.microsoft.com", cat: ["Text", "Image", "Office"], desc: "رایگان — یکپارچه با ویندوز و Office" },
+      { name: "HuggingChat", url: "https://huggingface.co/chat", cat: ["Text", "Open Source"], desc: "ربات متن‌باز برای آزمایش مدل‌های مختلف" }
+    ];
+
+    const allCategories = [...new Set(aiTools.flatMap(t => t.cat))];
+    const filtersContainer = document.getElementById('filters');
+    allCategories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = cat;
+      btn.dataset.category = cat;
+      btn.addEventListener('click', () => filterByCategory(cat));
+      filtersContainer.appendChild(btn);
+    });
+
+    let activeCategory = null;
+
+    function renderTools(tools) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      if (tools.length === 0) {
+        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#888;">موردی یافت نشد.</p>';
+        return;
+      }
+
+      tools.forEach(tool => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => window.open(tool.url, '_blank');
+
+        const logoDiv = document.createElement('div');
+        logoDiv.className = 'logo-placeholder';
+        logoDiv.style.backgroundColor = stringToColor(tool.name);
+        logoDiv.textContent = tool.name.charAt(0).toUpperCase();
+
+        const h3 = document.createElement('h3');
+        h3.textContent = tool.name;
+
+        const p = document.createElement('p');
+        p.textContent = tool.desc;
+
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'tags';
+        tool.cat.forEach(c => {
+          const tag = document.createElement('span');
+          tag.className = 'tag ' + (tool.persian ? 'persian' : '');
+          tag.textContent = c;
+          tagsDiv.appendChild(tag);
+        });
+
+        card.appendChild(logoDiv);
+        card.appendChild(h3);
+        card.appendChild(p);
+        card.appendChild(tagsDiv);
+        grid.appendChild(card);
+      });
+    }
+
+    function filterByCategory(category) {
+      activeCategory = activeCategory === category ? null : category;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === category && activeCategory === category);
+      });
+
+      let filtered = aiTools;
+      if (activeCategory) {
+        filtered = aiTools.filter(t => t.cat.includes(activeCategory));
+      }
+
+      const term = document.getElementById('search').value.toLowerCase();
+      if (term) {
+        filtered = filtered.filter(t =>
+          t.name.toLowerCase().includes(term) ||
+          t.desc.toLowerCase().includes(term)
+        );
+      }
+
+      renderTools(filtered);
+    }
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      let filtered = aiTools;
+      if (activeCategory) {
+        filtered = aiTools.filter(t => t.cat.includes(activeCategory));
+      }
+      filtered = filtered.filter(t =>
+        t.name.toLowerCase().includes(term) ||
+        t.desc.toLowerCase().includes(term)
+      );
+      renderTools(filtered);
+    });
+
+    renderTools(aiTools);
+  </script>
+</body>
+</html>
