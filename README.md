@@ -30,6 +30,7 @@
 
 1. ریپو را کلون کنید:
    ```bash
-   git clone https://github.com/YOUR-GITHUB-USERNAME/ai-chatbot-directory.git
+   git clone https://github.com/mr-amirasgari/ai-chatbot-directory
 2. 
 ```bash
+https://mr-amirasgari.github.io/ai-chatbot-directory/
