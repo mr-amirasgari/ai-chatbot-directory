@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="فهرست جامع ربات‌های چت هوش مصنوعی و ابزارهای بازنویسی — شامل لینک مستقیم، دسته‌بندی و پشتیبانی از فارسی">
-  <title>دایرکتوری ربات‌های هوش مصنوعی</title>
+  <meta name="description" content="فهرست جامع ربات‌های چت هوش مصنوعی و آرشیو پروژه‌های دانشجویی">
+  <title>دایرکتوری هوش مصنوعی</title>
   <style>
     :root {
       --primary: #4361ee;
@@ -15,6 +15,7 @@
       --shadow: 0 4px 12px rgba(0,0,0,0.08);
       --success: #4cc9f0;
       --persian: #f72585;
+      --student: #2ec4b6; /* رنگ سبز مخصوص کارت دانشجویی */
     }
 
     * {
@@ -109,11 +110,19 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    /* نوار رنگی مخصوص کارت پروژه‌های دانشجویی */
+    .card.is-student-project {
+      border-top: 4px solid var(--student);
+      background-color: #f0fdfa; /* کمی تفاوت رنگ پس‌زمینه */
     }
 
     .logo-placeholder {
@@ -127,7 +136,6 @@
       font-size: 1.2rem;
       color: white;
       margin-bottom: 14px;
-      /* رنگ پیش‌فرض — در جاوااسکریپت تغییر می‌کند */
       background: var(--primary);
     }
 
@@ -162,6 +170,11 @@
       background: #ffe5ec;
       color: var(--persian);
     }
+    
+    .tag.project-tag {
+      background: #b2dfdb;
+      color: #00695c;
+    }
 
     footer {
       text-align: center;
@@ -181,8 +194,8 @@
 <body>
 
   <header>
-    <h1>🤖 دایرکتوری ربات‌های هوش مصنوعی</h1>
-    <p class="subtitle">فهرستی از ربات‌های چت، ابزارهای بازنویسی و تحلیل متن — با پشتیبانی از فارسی</p>
+    <h1>🤖 دایرکتوری هوش مصنوعی</h1>
+    <p class="subtitle">فهرستی از ربات‌های چت، ابزارها و <strong style="color:var(--student)">پروژه‌های دانشجویی</strong></p>
   </header>
 
   <div class="search-box">
@@ -198,7 +211,6 @@
   </footer>
 
   <script>
-    // تابع تولید رنگ بر اساس نام (ثابت برای هر نام)
     function stringToColor(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
@@ -213,6 +225,7 @@
     }
 
     const aiTools = [
+      // --- لیست کامل ابزارهای قبلی ---
       { name: "ChatGPT", url: "https://chat.openai.com", cat: ["Text", "Code", "Multilingual"], desc: "معروف‌ترین ربات چت توسط OpenAI — پشتیبانی خوب از فارسی", persian: true },
       { name: "Claude", url: "https://claude.ai", cat: ["Text", "Document Analysis", "Code"], desc: "از Anthropic — قوی در تحلیل اسناد طولانی" },
       { name: "Gemini", url: "https://gemini.google.com", cat: ["Text", "Image", "Code", "Multimodal"], desc: "ربات گوگل — یکپارچه با اکوسیستم گوگل" },
@@ -230,15 +243,33 @@
       { name: "Smodin", url: "https://smodin.io/rewriter", cat: ["Paraphrasing", "Multilingual"], desc: "پشتیبانی از فارسی برای بازنویسی", persian: true },
       { name: "TextFixer", url: "https://textfixer.com", cat: ["RTL", "Text Cleanup"], desc: "ابزار رایگان برای راست‌چین و مرتب‌سازی متن فارسی", persian: true },
       { name: "Copilot", url: "https://copilot.microsoft.com", cat: ["Text", "Image", "Office"], desc: "رایگان — یکپارچه با ویندوز و Office" },
-      { name: "HuggingChat", url: "https://huggingface.co/chat", cat: ["Text", "Open Source"], desc: "ربات متن‌باز برای آزمایش مدل‌های مختلف" }
-    ];
+      { name: "HuggingChat", url: "https://huggingface.co/chat", cat: ["Text", "Open Source"], desc: "ربات متن‌باز برای آزمایش مدل‌های مختلف" },
+
+      // --- کارت جدید: پروژه‌های دانشجویی ---
+  // ... (ادامه لیست ربات‌های چت)
+
+// --- کارت جدید: پروژه‌های دانشجویی ---
+{ 
+    name: "پروژه‌های ماشین لرنینگ دانشجویان", 
+    // این خط را از "#" به "projects.html" تغییر دهید:
+    url: "projects.html", 
+    cat: ["Student Projects", "Archive"], 
+    desc: "مشاهده آرشیو کامل پروژه‌ها و تحقیقات انجام شده توسط دانشجویان دانشگاه.", 
+    persian: true
+}
+]; // مطمئن شوید که کروشه بسته و سمی‌کالن در انتهای آرایه وجود دارد.
 
     const allCategories = [...new Set(aiTools.flatMap(t => t.cat))];
     const filtersContainer = document.getElementById('filters');
+    
+    // مرتب‌سازی: آوردن "Student Projects" به اول لیست فیلترها
+    allCategories.sort((a, b) => a === "Student Projects" ? -1 : 1);
+
     allCategories.forEach(cat => {
       const btn = document.createElement('button');
       btn.className = 'filter-btn';
-      btn.textContent = cat;
+      // ترجمه لیبل فیلتر پروژه‌های دانشجویی
+      btn.textContent = cat === "Student Projects" ? "🎓 پروژه‌های دانشجویی" : cat;
       btn.dataset.category = cat;
       btn.addEventListener('click', () => filterByCategory(cat));
       filtersContainer.appendChild(btn);
@@ -256,13 +287,16 @@
 
       tools.forEach(tool => {
         const card = document.createElement('div');
-        card.className = 'card';
+        const isStudent = tool.cat.includes("Student Projects");
+        
+        // اضافه کردن کلاس خاص برای استایل متفاوت
+        card.className = 'card' + (isStudent ? ' is-student-project' : '');
         card.onclick = () => window.open(tool.url, '_blank');
 
         const logoDiv = document.createElement('div');
         logoDiv.className = 'logo-placeholder';
-        logoDiv.style.backgroundColor = stringToColor(tool.name);
-        logoDiv.textContent = tool.name.charAt(0).toUpperCase();
+        logoDiv.style.backgroundColor = isStudent ? 'var(--student)' : stringToColor(tool.name);
+        logoDiv.textContent = isStudent ? '🎓' : tool.name.charAt(0).toUpperCase();
 
         const h3 = document.createElement('h3');
         h3.textContent = tool.name;
@@ -274,7 +308,12 @@
         tagsDiv.className = 'tags';
         tool.cat.forEach(c => {
           const tag = document.createElement('span');
-          tag.className = 'tag ' + (tool.persian ? 'persian' : '');
+          let tagClass = 'tag';
+          // استایل تگ‌های خاص
+          if (c === 'Student Projects') tagClass += ' project-tag';
+          if (tool.persian && (c === 'RTL' || c === 'Archive' || tool.persian)) tagClass += ' persian';
+          
+          tag.className = tagClass;
           tag.textContent = c;
           tagsDiv.appendChild(tag);
         });
