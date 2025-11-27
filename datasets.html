@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="آرشیو کامل دیتاست‌های مورد نیاز برای پروژه‌های هوش مصنوعی">
+    <title>آرشیو دیتاست‌ها</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --dark: #212529;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --dataset: #00b4d8; /* رنگ آبی برای دیتاست‌ها */
+            --persian: #f72585;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: #fafbff;
+            color: var(--dark);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: var(--dataset);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--dataset);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #b3e5fc;
+            color: #0288d1;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .tag.persian-tag {
+            background: #ffe5ec;
+            color: var(--persian);
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--dataset);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .download-btn:hover {
+            background-color: #008c9e;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="index.html" class="back-link">← بازگشت به فهرست اصلی</a>
+
+    <header>
+        <h1>💾 آرشیو کامل دیتاست‌ها</h1>
+        <p class="subtitle">اینجا می‌توانید داده‌های مورد نیاز برای پروژه‌های هوش مصنوعی را دانلود کنید. </p>
+    </header>
+
+    <div class="grid" id="datasets-grid">
+        </div>
+
+    <script>
+        const datasets = [
+            // --- فایل ۱: دیتاست تشخیص سرطان پستان (لینک واقعی فایل آپلود شده) ---
+            {
+                name: "دیتاست تشخیص سرطان پستان",
+                desc: "داده‌های واقعی شامل ویژگی‌های هسته‌های سلولی برای پیش‌بینی خوش‌خیم (Benign) یا بدخیم (Malignant) بودن تومور.",
+                tags: ["Health", "Classification", "Real Data", "CSV"],
+                // **لینک مستقیم به فایل آپلود شده**
+                link: "breast_cancer_dataset.xlsx" 
+            },
+            // --- فایل ۲: دیتاست پیش‌بینی دیابت (لینک واقعی فایل آپلود شده) ---
+            {
+                name: "دیتاست پیش‌بینی دیابت",
+                desc: "داده‌های بیماران شامل ویژگی‌هایی مانند گلوکز، BMI و سن برای پیش‌بینی احتمال ابتلا به دیابت.",
+                tags: ["Health", "Classification", "Real Data", "CSV"],
+                // **لینک مستقیم به فایل آپلود شده**
+                link: "diabetes.xlsx" 
+            },
+        ]
+
+        function renderDatasets() {
+            const grid = document.getElementById('datasets-grid');
+            grid.innerHTML = ''; 
+
+            datasets.forEach(dataset => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const h3 = document.createElement('h3');
+                h3.textContent = dataset.name;
+
+                const p = document.createElement('p');
+                p.textContent = dataset.desc;
+
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'tags';
+                dataset.tags.forEach(tagText => {
+                    const tag = document.createElement('span');
+                    let tagClass = 'tag';
+                    
+                    if (tagText === 'Persian' || tagText.includes('Excel') || tagText.includes('CSV')) tagClass += ' persian-tag';
+                    
+                    tag.className = tagClass;
+                    tag.textContent = tagText;
+                    tagsDiv.appendChild(tag);
+                });
+
+                const downloadLink = document.createElement('a');
+                downloadLink.className = 'download-btn';
+                downloadLink.href = dataset.link;
+                
+                let fileType = 'فایل داده';
+                if (dataset.tags.includes('Excel') || dataset.tags.includes('CSV')) fileType = 'اکسل/CSV';
+                
+                downloadLink.textContent = `📥 دانلود (${fileType})`; 
+                downloadLink.target = '_blank';
+                downloadLink.download = dataset.link; // این ویژگی مرورگر را وادار به دانلود می‌کند.
+
+                card.appendChild(h3);
+                card.appendChild(p);
+                card.appendChild(tagsDiv);
+                card.appendChild(downloadLink);
+                grid.appendChild(card);
+            });
+        }
+
+        renderDatasets();
+    </script>
+</body>
+</html>
