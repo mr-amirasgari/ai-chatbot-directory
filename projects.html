@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="لیست پروژه‌های ماشین لرنینگ دانشجویان">
   <title>پروژه‌های دانشجویان</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --primary: #4361ee;
@@ -13,15 +16,14 @@
       --card-bg: #ffffff;
       --border: #e9ecef;
       --shadow: 0 4px 12px rgba(0,0,0,0.08);
-      --student: #2ec4b6; /* رنگ اصلی این صفحه */
-      --persian: #f72585;
+      --student: #2ec4b6;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+      font-family: 'Vazirmatn', sans-serif;
     }
 
     body {
@@ -39,7 +41,7 @@
     h1 {
       font-size: 2.2rem;
       margin-bottom: 12px;
-      color: var(--student); /* تغییر رنگ تیتر به رنگ دانشجویی */
+      color: var(--student);
     }
 
     .subtitle {
@@ -47,7 +49,6 @@
       font-size: 1.1rem;
     }
 
-    /* دکمه بازگشت */
     .back-btn {
       display: inline-block;
       margin-bottom: 20px;
@@ -57,16 +58,11 @@
       text-decoration: none;
       border-radius: 20px;
       font-size: 0.9rem;
-      transition: opacity 0.2s;
-    }
-    .back-btn:hover {
-      opacity: 0.9;
     }
 
     .search-box {
       max-width: 700px;
       margin: 0 auto 24px;
-      position: relative;
     }
 
     #search {
@@ -76,7 +72,6 @@
       border-radius: 16px;
       font-size: 1.1rem;
       outline: none;
-      transition: border-color 0.3s;
     }
 
     #search:focus {
@@ -96,17 +91,14 @@
       border-radius: 16px;
       padding: 20px;
       box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      border-top: 4px solid var(--student); /* نوار سبز برای همه */
+      border-top: 4px solid var(--student);
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
     .logo-placeholder {
@@ -116,7 +108,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
       font-size: 1.2rem;
       color: white;
       margin-bottom: 14px;
@@ -126,17 +117,14 @@
     .card h3 {
       font-size: 1.3rem;
       margin-bottom: 4px;
-      color: var(--dark);
     }
 
     .student-author {
       font-size: 0.85rem;
       color: #666;
-      font-weight: 500;
       margin-bottom: 10px;
-      display: block;
     }
-    
+
     .student-author strong {
       color: var(--student);
     }
@@ -155,7 +143,7 @@
     }
 
     .tag {
-      background: #e0f2f1; /* تم سبز روشن */
+      background: #e0f2f1;
       color: #00695c;
       font-size: 0.75rem;
       padding: 4px 10px;
@@ -169,133 +157,102 @@
       font-size: 0.9rem;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-  <a href="index.html" class="back-btn">← بازگشت به صفحه اصلی</a>
+<a href="index.html" class="back-btn">← بازگشت</a>
 
-  <header>
-    <h1>🎓 پروژه‌های ماشین لرنینگ</h1>
-    <p class="subtitle">آرشیو پروژه‌های منتخب دانشجویان</p>
-  </header>
+<header>
+  <h1>🎓 پروژه‌های ماشین لرنینگ</h1>
+  <p class="subtitle">آرشیو پروژه‌های منتخب دانشجویان</p>
+</header>
 
-  <div class="search-box">
-    <input type="text" id="search" placeholder="نام پروژه یا دانشجو را جستجو کنید..." />
-  </div>
+<div class="search-box">
+  <input type="text" id="search" placeholder="نام پروژه یا دانشجو را جستجو کنید..." />
+</div>
 
-  <div class="grid" id="grid"></div>
+<div class="grid" id="grid"></div>
 
-  <footer>
-    <p>تمامی حقوق برای دانشجویان و توسعه‌دهندگان محفوظ است.</p>
-  </footer>
+<footer>
+  <p>تمامی حقوق محفوظ است.</p>
+</footer>
 
-  <script>
-    // لیست پروژه‌های ارسالی شما
-    const projects = [
-      { 
-        name: "Diabetes Predictor", 
-        url: "https://github.com/mohammad-re2004/diabetes_predictor_app", 
-        author: "Mohammad-Reza",
-        cat: ["Python", "Streamlit", "Prediction"], 
-        desc: "اپلیکیشن پیش‌بینی دیابت با استفاده از یادگیری ماشین (مخزن گیت‌هاب)."
-      },
-      { 
-        name: "BrainVision AI", 
-        url: "https://alij-official.github.io/BrainVision-AI/", 
-        author: "Ali J",
-        cat: ["Computer Vision", "Web App"], 
-        desc: "پلتفرم هوش مصنوعی مبتنی بر بینایی ماشین و پردازش تصویر."
-      },
-      { 
-        name: "Medical Ruleset Visualizer", 
-        url: "https://mr-amirasgari.github.io/medical-ruleset-visualizer/", 
-        author: "Amir Asgari",
-        cat: ["Visualization", "Medical", "Ruleset"], 
-        desc: "ابزار مصورسازی قوانین و داده‌های پزشکی."
-      },
-      { 
-        name: "Diabetes Screening", 
-        url: "https://abolfazlghasemi83.github.io/diabetes_screening/", 
-        author: "Abolfazl Ghasemi",
-        cat: ["Health", "Screening", "Web Tool"], 
-        desc: "ابزار آنلاین غربالگری و تشخیص اولیه دیابت."
-      },
-      { 
-        name: "Diaco Screening Tool", 
-        url: "https://mohammadreza-shahbazi313.github.io/Diaco-Diabetes-Screening-Tool/", 
-        author: "Mohammadreza Shahbazi",
-        cat: ["Diaco", "Health", "AI"], 
-        desc: "ابزار هوشمند غربالگری دیابت (Diaco)."
-      }
-      {
-        name: "سیستم قانون‌محور تشخیص دیابت",
-        url: "https://fatemebabaei3813-oss.github.io/diabet/",
-        author: "فاطمه بابایی",
-        cat: ["Health","Diabetes","Ruleset","Web Tool"],
-        desc: "سیستم قانون‌محور برای تشخیص و غربالگری دیابت."
-    }
+<script>
+const projects = [
+  {
+    name: "Diabetes Predictor",
+    url: "https://github.com/mohammad-re2004/diabetes_predictor_app",
+    author: "Mohammad-Reza",
+    cat: ["Python","Streamlit","Prediction"],
+    desc: "اپلیکیشن پیش‌بینی دیابت با یادگیری ماشین."
+  },
+  {
+    name: "BrainVision AI",
+    url: "https://alij-official.github.io/BrainVision-AI/",
+    author: "علی جلیلیان",
+    cat: ["Computer Vision","Web App"],
+    desc: "پلتفرم بینایی ماشین."
+  },
+  {
+    name: "Medical Ruleset Visualizer",
+    url: "https://mr-amirasgari.github.io/medical-ruleset-visualizer/",
+    author: "امیرمحمدعسگری",
+    cat: ["Visualization","Medical","Ruleset"],
+    desc: "مصورسازی قوانین پزشکی."
+  },
+  {
+    name: "Diabetes Screening",
+    url: "https://abolfazlghasemi83.github.io/diabetes_screening/",
+    author: "ابوالفضل قاسمی",
+    cat: ["Health","Screening","Web Tool"],
+    desc: "غربالگری آنلاین دیابت."
+  },
+  {
+    name: "Diaco Screening Tool",
+    url: "https://mohammadreza-shahbazi313.github.io/Diaco-Diabetes-Screening-Tool/",
+    author: "محمدرضاشهبازی",
+    cat: ["Health","AI","Diaco"],
+    desc: "ابزار هوشمند غربالگری دیابت."
+  },
+  {
+    name: "سیستم قانون‌محور تشخیص دیابت",
+    url: "https://fatemebabaei3813-oss.github.io/diabet/",
+    author: "فاطمه بابایی",
+    cat: ["Health","Diabetes","Ruleset","Web Tool"],
+    desc: "سیستم قانون‌محور برای تشخیص و غربالگری دیابت."
+  }
+];
 
-    ];
+function render(items){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  items.forEach(p=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.onclick=()=>window.open(p.url,"_blank");
+    c.innerHTML=`
+      <div class="logo-placeholder">🎓</div>
+      <h3>${p.name}</h3>
+      <span class="student-author">دانشجو: <strong>${p.author}</strong></span>
+      <p>${p.desc}</p>
+      <div class="tags">${p.cat.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    `;
+    grid.appendChild(c);
+  });
+}
 
-    function renderProjects(items) {
-      const grid = document.getElementById('grid');
-      grid.innerHTML = '';
-      
-      if (items.length === 0) {
-        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center;">موردی یافت نشد.</p>';
-        return;
-      }
+document.getElementById("search").addEventListener("input",e=>{
+  const t=e.target.value.toLowerCase();
+  render(projects.filter(p =>
+    p.name.toLowerCase().includes(t) ||
+    p.author.toLowerCase().includes(t) ||
+    p.desc.toLowerCase().includes(t)
+  ));
+});
 
-      items.forEach(proj => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.onclick = () => window.open(proj.url, '_blank');
+render(projects);
+</script>
 
-        const logoDiv = document.createElement('div');
-        logoDiv.className = 'logo-placeholder';
-        logoDiv.textContent = '🎓';
-
-        const h3 = document.createElement('h3');
-        h3.textContent = proj.name;
-
-        const author = document.createElement('span');
-        author.className = 'student-author';
-        author.innerHTML = `دانشجو: <strong>${proj.author}</strong>`;
-
-        const p = document.createElement('p');
-        p.textContent = proj.desc;
-
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'tags';
-        proj.cat.forEach(c => {
-          const tag = document.createElement('span');
-          tag.className = 'tag';
-          tag.textContent = c;
-          tagsDiv.appendChild(tag);
-        });
-
-        card.appendChild(logoDiv);
-        card.appendChild(h3);
-        card.appendChild(author);
-        card.appendChild(p);
-        card.appendChild(tagsDiv);
-        grid.appendChild(card);
-      });
-    }
-
-    // قابلیت جستجو
-    document.getElementById('search').addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase();
-      const filtered = projects.filter(p => 
-        p.name.toLowerCase().includes(term) || 
-        p.author.toLowerCase().includes(term) ||
-        p.desc.toLowerCase().includes(term)
-      );
-      renderProjects(filtered);
-    });
-
-    renderProjects(projects);
-  </script>
 </body>
 </html>
