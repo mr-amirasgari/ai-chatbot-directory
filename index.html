@@ -1,426 +1,741 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="فهرست جامع ربات‌های چت، ابزارها، پروژه‌های دانشجویی و دیتاست‌ها">
-  <title>دایرکتوری هوش مصنوعی</title>
-  <style>
-    :root {
-      --primary: #4361ee;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --card-bg: #ffffff;
-      --border: #e9ecef;
-      --shadow: 0 4px 12px rgba(0,0,0,0.08);
-      --persian: #f72585;
-      --student: #2ec4b6; /* رنگ سبز برای پروژه‌ها */
-      --dataset: #00b4d8; /* رنگ آبی برای دیتاست‌ها */
-      --success: #4cc9f0; /* این را نگه داشتیم تا CSS شما دست نخورد */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 راهنمای کامل هوش‌های مصنوعی</title>
+    <style>
+        /* ===========================
+           بخش استایل‌ها (CSS)
+           =========================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
-    }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        /* --- هدر و جستجو --- */
+        header {
+            text-align: center; padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border-radius: 30px; margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 { font-size: 3.5em; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeInDown 1s ease; }
+        .subtitle { font-size: 1.3em; opacity: 0.9; animation: fadeInUp 1s ease 0.3s backwards; }
+        
+        .search-box { margin: 30px auto; max-width: 600px; animation: fadeIn 1s ease 0.6s backwards; }
+        .search-box input {
+            width: 100%; padding: 18px 25px; border: none; border-radius: 50px;
+            font-size: 1.1em; background: rgba(255, 255, 255, 0.95); color: #333;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;
+        }
+        .search-box input:focus { outline: none; transform: scale(1.02); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); }
 
-    body {
-      background-color: #fafbff;
-      color: var(--dark);
-      padding: 20px;
-      line-height: 1.6;
-    }
+        /* --- آمار و فیلترها --- */
+        .stats { display: flex; justify-content: center; gap: 40px; margin: 40px 0; flex-wrap: wrap; }
+        .stat-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); padding: 25px 40px; border-radius: 15px; text-align: center; animation: fadeIn 1s ease; }
+        .stat-number { font-size: 2.5em; font-weight: bold; display: block; margin-bottom: 5px; }
 
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+        .filter-tabs { display: flex; justify-content: center; gap: 15px; margin: 40px 0; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 12px 30px; background: rgba(255, 255, 255, 0.2); border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px; color: #fff; font-size: 1.1em; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);
+        }
+        .filter-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-3px); }
+        .filter-btn.active { background: rgba(255, 255, 255, 0.4); border-color: #fff; font-weight: bold; }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
+        /* --- کارت‌های ابزار AI --- */
+        .categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 40px; }
+        .category-card {
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border-radius: 20px; padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2); animation: fadeInUp 0.8s ease backwards;
+        }
+        .category-card:hover { transform: translateY(-10px) scale(1.02); background: rgba(255, 255, 255, 0.25); }
+        .category-icon { font-size: 3em; margin-bottom: 15px; display: block; }
+        .category-title { font-size: 1.6em; margin-bottom: 15px; font-weight: bold; }
+        .tools-list { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .category-card.active .tools-list { max-height: 2000px; }
+        
+        .tool-item {
+            display: block; text-decoration: none; color: inherit; background: rgba(255, 255, 255, 0.1);
+            padding: 15px; margin: 10px 0; border-radius: 12px; transition: all 0.3s ease; border-right: 4px solid transparent; cursor: pointer;
+        }
+        .tool-item:hover { background: rgba(255, 255, 255, 0.2); transform: translateX(-5px); border-right-color: #fff; }
+        .tool-name { font-weight: bold; font-size: 1.1em; margin-bottom: 5px; }
+        .tool-desc { font-size: 0.95em; opacity: 0.85; line-height: 1.5; }
+        .expand-btn { text-align: center; margin-top: 15px; opacity: 0.7; font-size: 0.9em; }
 
-    .subtitle {
-      color: #6c757d;
-      font-size: 1.1rem;
-      /* به‌روزرسانی زیرتیتر برای نمایش هر دو فیلد جدید */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+        /* --- استایل بنر لینک به صفحه پروژه‌ها --- */
+        .student-projects-banner {
+            margin-top: 80px;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 1s backwards;
+            border: 4px solid rgba(255,255,255,0.5);
+        }
+        .student-projects-banner:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(255, 154, 158, 0.4); }
+        .student-projects-banner h2 { font-size: 2.5em; margin-bottom: 15px; }
+        .student-projects-banner p { font-size: 1.2em; }
 
-    .search-box {
-      max-width: 700px;
-      margin: 0 auto 24px;
-      position: relative;
-    }
+        /* --- استایل‌های صفحه داخلی پروژه‌ها --- */
+        #projectsPage { display: none; animation: fadeIn 0.5s ease; }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); padding: 12px 25px; border-radius: 50px;
+            color: white; cursor: pointer; margin-bottom: 20px; display: inline-block; font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.4); padding-right: 35px; }
+        
+        .project-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;
+        }
+        .project-card {
+            background: rgba(255, 255, 255, 0.95); color: #333; padding: 25px; border-radius: 15px;
+            cursor: pointer; transition: transform 0.3s; position: relative; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-bottom: 5px solid #667eea;
+        }
+        .project-card:hover { transform: translateY(-7px); }
+        .logo-placeholder { font-size: 3em; margin-bottom: 15px; text-align: center;}
+        .student-author { display: block; margin: 10px 0; color: #555; font-size: 0.95em; background: #f0f0f0; padding: 5px 10px; border-radius: 8px; width: fit-content;}
+        .tags { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 5px; }
+        .tag { background: #667eea; color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.8em; }
+        
+        /* فرم افزودن پروژه */
+        .add-project-form {
+            background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 20px; margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+        }
+        .form-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+        .form-input {
+            flex: 1; padding: 12px; border-radius: 10px; border: none; min-width: 200px; font-family: inherit;
+        }
+        .submit-btn {
+            background: #4ade80; color: #064e3b; padding: 12px 30px; border: none; border-radius: 10px;
+            font-weight: bold; cursor: pointer; width: 100%; transition: background 0.3s; font-size: 1.1em;
+        }
+        .submit-btn:hover { background: #22c55e; }
 
-    #search {
-      width: 100%;
-      padding: 14px 20px;
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      font-size: 1.1rem;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    #search:focus {
-      border-color: var(--primary);
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .filter-btn {
-      padding: 8px 16px;
-      background: #e9ecef;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-    }
-
-    /* استایل متمایز پروژه‌های دانشجویی */
-    .card.is-student-project {
-      border-top: 4px solid var(--student);
-      background-color: #f0fdfa; 
-    }
-    
-    /* استایل متمایز دیتاست‌ها (جدید) */
-    .card.is-dataset {
-        border-top: 4px solid var(--dataset);
-        background-color: #e0f8ff; 
-    }
-
-    .logo-placeholder {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: white;
-      margin-bottom: 14px;
-      background: var(--primary);
-    }
-    
-    /* رنگ لوگو برای آیتم‌های خاص */
-    .card.is-student-project .logo-placeholder { background: var(--student); }
-    .card.is-dataset .logo-placeholder { background: var(--dataset); }
-
-
-    .card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: var(--dark);
-    }
-
-    .card p {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 14px;
-      flex-grow: 1;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      background: #e9ecef;
-      color: #495057;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 12px;
-    }
-
-    .tag.persian {
-      background: #ffe5ec;
-      color: var(--persian);
-    }
-    
-    .tag.project-tag {
-      background: #b2dfdb;
-      color: #00695c;
-    }
-
-    /* تگ مخصوص دیتاست‌ها */
-    .tag.dataset-tag {
-      background: #b3e5fc;
-      color: #0288d1;
-    }
-
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 12px; }
-      h1 { font-size: 1.8rem; }
-      .grid { grid-template-columns: 1fr; }
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2em; }
+            .categories, .project-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1>🤖 دایرکتوری هوش مصنوعی</h1>
-    <p class="subtitle">
-        فهرستی از ربات‌های چت، ابزارها، 
-        <strong style="color:var(--student)">پروژه‌های دانشجویی</strong>
-        و 
-        <strong style="color:var(--dataset)">دیتاست‌ها</strong>
-    </p>
-  </header>
-
-  <div class="search-box">
-    <input type="text" id="search" placeholder="نام ربات، دیتاست یا کاربرد مورد نظر را جستجو کنید..." />
-  </div>
-
-  <div class="filters" id="filters"></div>
-
-  <div class="grid" id="grid"></div>
-
-  <footer>
-    <p>تمامی نام‌ها و لوگوها متعلق به صاحبان اصلی خود هستند.</p>
-  </footer>
-
-  <script>
-    function stringToColor(str) {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      let color = '#';
-      for (let i = 0; i < 3; i++) {
-        const value = (hash >> (i * 8)) & 0xFF;
-        color += ('00' + value.toString(16)).substr(-2);
-      }
-      return color;
-    }
-
-    const aiTools = [
-      // --- لیست کامل ابزارهای اصلی (که شما تهیه کردید) ---
-      { name: "ChatGPT", url: "https://chat.openai.com", cat: ["Text", "Code", "Multilingual"], desc: "معروف‌ترین ربات چت توسط OpenAI — پشتیبانی خوب از فارسی", persian: true },
-      { name: "Claude", url: "https://claude.ai", cat: ["Text", "Document Analysis", "Code"], desc: "از Anthropic — قوی در تحلیل اسناد طولانی" },
-      { name: "Gemini", url: "https://gemini.google.com", cat: ["Text", "Image", "Code", "Multimodal"], desc: "ربات گوگل — یکپارچه با اکوسیستم گوگل" },
-      { name: "AI Studio", url: "https://aistudio.google.com", cat: ["Text", "Image", "API", "Developer"], desc: "پلتفرم توسعه‌ی گوگل برای مدل‌های Gemini" },
-      { name: "Qwen", url: "https://qwen.ai", cat: ["Text", "Code", "Multilingual", "RTL"], desc: "از Alibaba — پشتیبانی عالی از فارسی", persian: true },
-      { name: "Kimi", url: "https://kimi.moonshot.cn", cat: ["Text", "Web Search", "Long Context"], desc: "از Moonshot AI — حافظه بسیار بالا" },
-      { name: "Grok", url: "https://x.ai/grok", cat: ["Text", "Social", "Real-time"], desc: "ربات هوش مصنوعی ایلان ماسک در پلتفرم X" },
-      { name: "Perplexity", url: "https://www.perplexity.ai", cat: ["Search", "Research", "Text"], desc: "ترکیب جستجو + چت با منبع معتبر" },
-      { name: "Poe", url: "https://poe.com", cat: ["Text", "Multiple Models", "API"], desc: "از Quora — دسترسی به چندین مدل در یک پلتفرم" },
-      { name: "YouChat", url: "https://you.com", cat: ["Search", "Chat", "Apps"], desc: "ربات چت با امکان سوئیچ بین مدل‌ها" },
-      { name: "Firefly", url: "https://firefly.adobe.com", cat: ["Image", "Design", "Generative"], desc: "ابزار تولید تصویر توسط Adobe" },
-      { name: "DeepSeek", url: "https://deepseek.com", cat: ["Text", "Code", "Chinese"], desc: "ربات چینی قوی در کدنویسی" },
-      { name: "QuillBot", url: "https://quillbot.com", cat: ["Paraphrasing", "Grammar"], desc: "محبوب‌ترین ابزار بازنویسی متن" },
-      { name: "Wordtune", url: "https://www.wordtune.com", cat: ["Paraphrasing", "Tone"], desc: "بازنویسی هوشمند با تنظیم لحن" },
-      { name: "Smodin", url: "https://smodin.io/rewriter", cat: ["Paraphrasing", "Multilingual"], desc: "پشتیبانی از فارسی برای بازنویسی", persian: true },
-      { name: "TextFixer", url: "https://textfixer.com", cat: ["RTL", "Text Cleanup"], desc: "ابزار رایگان برای راست‌چین و مرتب‌سازی متن فارسی", persian: true },
-      { name: "Copilot", url: "https://copilot.microsoft.com", cat: ["Text", "Image", "Office"], desc: "رایگان — یکپارچه با ویندوز و Office" },
-      { name: "HuggingChat", url: "https://huggingface.co/chat", cat: ["Text", "Open Source"], desc: "ربات متن‌باز برای آزمایش مدل‌های مختلف" },
-
-      // --- کارت ۱: پروژه‌های دانشجویی ---
-      { 
-        name: "پروژه‌های ماشین لرنینگ دانشجویان", 
-        url: "projects.html", 
-        cat: ["Student Projects", "Archive"], 
-        desc: "مشاهده آرشیو کامل پروژه‌ها و تحقیقات انجام شده توسط دانشجویان دانشگاه.", 
-        persian: true
-      },
-      
-      // --- کارت ۲: دیتاست‌ها (فیلد درخواستی شما) ---
-      { 
-        name: "دیتاست‌های یادگیری ماشین", 
-        url: "datasets.html", 
-        cat: ["Dataset", "Archive"], 
-        desc: "مشاهده آرشیو کامل و لینک‌های مرتبط با دیتاست‌های مختلف برای پروژه‌ها.", 
-        persian: true
-      }
-    ];
-
-    const allCategories = [...new Set(aiTools.flatMap(t => t.cat))];
-    const filtersContainer = document.getElementById('filters');
-    
-    // مرتب‌سازی: آوردن دیتاست‌ها و پروژه‌ها به اول لیست فیلترها
-    allCategories.sort((a, b) => {
-        if (a === "Dataset") return -1;
-        if (b === "Dataset") return 1;
-        if (a === "Student Projects") return -1;
-        if (b === "Student Projects") return 1;
-        return 0;
-    });
-
-    allCategories.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'filter-btn';
-      
-      let buttonText = cat;
-      if (cat === "Student Projects") buttonText = "🎓 پروژه‌های دانشجویی";
-      if (cat === "Dataset") buttonText = "📚 دیتاست‌ها";
-
-      btn.textContent = buttonText;
-      btn.dataset.category = cat;
-      btn.addEventListener('click', () => filterByCategory(cat));
-      filtersContainer.appendChild(btn);
-    });
-
-    let activeCategory = null;
-
-    function renderTools(tools) {
-      const grid = document.getElementById('grid');
-      grid.innerHTML = '';
-      if (tools.length === 0) {
-        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#888;">موردی یافت نشد.</p>';
-        return;
-      }
-
-      tools.forEach(tool => {
-        const card = document.createElement('div');
-        const isStudent = tool.cat.includes("Student Projects");
-        const isDataset = tool.cat.includes("Dataset");
+    <div class="container">
         
-        let cardClass = 'card';
-        if (isStudent) cardClass += ' is-student-project';
-        if (isDataset) cardClass += ' is-dataset';
+        <!-- =========================================
+             صفحه اصلی: ابزارهای هوش مصنوعی
+             ========================================= -->
+        <div id="mainPage">
+            <header>
+                <h1>🤖 راهنمای کامل هوش‌های مصنوعی</h1>
+                <p class="subtitle">بیش از ۲۰۰ ابزار هوش مصنوعی در یک نگاه</p>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 جستجوی ابزار یا دسته‌بندی...">
+                </div>
+            </header>
 
-        card.className = cardClass;
-        card.onclick = () => window.open(tool.url, '_blank');
+            <div class="stats">
+                <div class="stat-box"><span class="stat-number">200+</span><span>ابزار هوش مصنوعی</span></div>
+                <div class="stat-box"><span class="stat-number">25</span><span>دسته‌بندی مختلف</span></div>
+                <div class="stat-box"><span class="stat-number">2025</span><span>به‌روزترین لیست</span></div>
+            </div>
 
-        const logoDiv = document.createElement('div');
-        logoDiv.className = 'logo-placeholder';
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">🌟 همه دسته‌ها</button>
+                <button class="filter-btn" data-filter="creative">🎨 خلاقیت</button>
+                <button class="filter-btn" data-filter="business">💼 کسب‌وکار</button>
+                <button class="filter-btn" data-filter="development">💻 توسعه</button>
+                <button class="filter-btn" data-filter="content">📝 محتوا</button>
+                <button class="filter-btn" data-filter="research">🔬 تحقیق</button>
+                <button class="filter-btn" data-filter="advanced">🚀 پیشرفته</button>
+            </div>
+
+            <!-- لیست دسته‌بندی‌ها اینجا پر می‌شود -->
+            <div class="categories" id="categoriesContainer"></div>
+
+            <!-- بنر بزرگ برای رفتن به صفحه پروژه‌ها -->
+            <div class="student-projects-banner" onclick="showProjectsPage()">
+                <h2>🎓 پروژه‌های دانشجویان ماشین لرنینگ</h2>
+                <p>کلیک کنید تا آرشیو پروژه‌های منتخب و خلاقانه دانشجویان را ببینید</p>
+                <p style="font-size: 3em; margin-top: 20px;">👇</p>
+            </div>
+            
+            <footer style="text-align: center; margin-top: 40px; opacity: 0.6;">
+                تمامی حقوق محفوظ است © 2025
+            </footer>
+        </div>
+
+        <!-- =========================================
+             صفحه دوم: پروژه‌های دانشجویی (ابتدا مخفی)
+             ========================================= -->
+        <div id="projectsPage">
+            <button class="back-btn" onclick="showMainPage()">🔙 بازگشت به لیست هوش مصنوعی</button>
+            
+            <header style="margin-bottom: 20px; padding: 40px 20px;">
+                <h1>🎓 پروژه‌های ماشین لرنینگ</h1>
+                <p class="subtitle">آرشیو پروژه‌های منتخب دانشجویان</p>
+                <div class="search-box">
+                    <input id="projectSearch" placeholder="🔍 جستجوی نام پروژه یا دانشجو..." />
+                </div>
+            </header>
+
+            <!-- فرم ثبت پروژه جدید -->
+            <div class="add-project-form">
+                <h3 style="color:white; margin-bottom:15px;">➕ ثبت پروژه جدید (ذخیره در مرورگر شما)</h3>
+                <div class="form-row">
+                    <input id="newPName" class="form-input" placeholder="نام پروژه (مثال: تشخیص دیابت)" required>
+                    <input id="newPAuthor" class="form-input" placeholder="نام دانشجو" required>
+                </div>
+                <div class="form-row">
+                    <input id="newPUrl" class="form-input" placeholder="لینک پروژه (GitHub یا وب‌سایت)" required>
+                    <input id="newPTags" class="form-input" placeholder="تگ‌ها (با ویرگول جدا کنید: Python, AI)">
+                </div>
+                <div class="form-row">
+                    <input id="newPDesc" class="form-input" placeholder="توضیح کوتاه پروژه..." required>
+                </div>
+                <button class="submit-btn" onclick="addNewProject()">ثبت و نمایش در لیست</button>
+            </div>
+
+            <!-- لیست پروژه‌ها اینجا پر می‌شود -->
+            <div id="projectGrid" class="project-grid"></div>
+
+            <footer style="text-align: center; margin-top: 40px; opacity: 0.6;">
+                تمامی حقوق محفوظ است © 2025
+            </footer>
+        </div>
+
+    </div>
+
+    <script>
+        /* ==========================================
+           1. داده‌های کامل هوش مصنوعی (اصلاح شده)
+           ========================================== */
+        const data = {
+            "چت‌بات‌ها و دستیارهای متنی": {
+                icon: "💬",
+                category: "content",
+                tools: {
+                    "ChatGPT": { desc: "مکالمه، نویسندگی، کدنویسی، پاسخ به سوالات عمومی", url: "https://chat.openai.com" },
+                    "Claude": { desc: "تحلیل متن طولانی، نویسندگی، کدنویسی، استدلال", url: "https://claude.ai" },
+                    "LMSYS Chatbot Arena": { desc: "مقایسه و چت رایگان با تمام مدل‌های قدرتمند", url: "https://chat.lmsys.org" },
+                    "Gemini": { desc: "جستجو، تحلیل تصویر، ادغام با سرویس‌های گوگل", url: "https://gemini.google.com" },
+                    "Copilot": { desc: "دستیار ویندوز، جستجو، کمک در نرم‌افزارهای مایکروسافت", url: "https://copilot.microsoft.com" },
+                    "Perplexity": { desc: "جستجوی هوشمند با منبع‌دهی و پاسخ‌های دقیق", url: "https://www.perplexity.ai" },
+                    "Grok": { desc: "چت‌بات توییتر/X با دسترسی به اطلاعات لحظه‌ای", url: "https://x.com/i/grok" },
+                    "DeepSeek": { desc: "چت‌بات چینی قوی در ریاضی و کدنویسی", url: "https://www.deepseek.com" },
+                    "Mistral/Le Chat": { desc: "چت‌بات اروپایی سبک و سریع", url: "https://chat.mistral.ai" },
+                    "Pi": { desc: "مکالمه دوستانه و حمایت عاطفی", url: "https://pi.ai" },
+                    "Character.AI": { desc: "چت با شخصیت‌های خیالی و سفارشی", url: "https://character.ai" },
+                    "Replika": { desc: "دوست مجازی و همراه عاطفی", url: "https://replika.com" }
+                }
+            },
+            "تولید تصویر": {
+                icon: "🎨",
+                category: "creative",
+                tools: {
+                    "Midjourney": { desc: "تصاویر هنری با کیفیت بالا و سبک منحصربفرد", url: "https://www.midjourney.com" },
+                    "DALL-E 3": { desc: "تولید تصویر از متن، ادغام با ChatGPT", url: "https://openai.com/dall-e-3" },
+                    "Stable Diffusion": { desc: "تولید تصویر رایگان و قابل نصب روی سیستم", url: "https://stability.ai" },
+                    "Leonardo.AI": { desc: "تصاویر گیم و کاراکتر با کنترل بالا", url: "https://leonardo.ai" },
+                    "Ideogram": { desc: "متخصص در تصاویر با متن فارسی/انگلیسی دقیق", url: "https://ideogram.ai" },
+                    "Adobe Firefly": { desc: "تولید تصویر برای طراحان، ادغام با فتوشاپ", url: "https://firefly.adobe.com" },
+                    "Bing Image Creator": { desc: "تولید تصویر رایگان با DALL-E", url: "https://www.bing.com/images/create" },
+                    "Playground AI": { desc: "ویرایش و تولید تصویر رایگان", url: "https://playgroundai.com" },
+                    "NightCafe": { desc: "تولید تصویر هنری با سبک‌های مختلف", url: "https://nightcafe.studio" },
+                    "Canva AI": { desc: "طراحی گرافیک و پوستر با هوش مصنوعی", url: "https://www.canva.com" },
+                    "Flux": { desc: "تولید تصویر واقع‌گرایانه جدید و قدرتمند", url: "https://flux.1" }
+                }
+            },
+            "تولید ویدیو": {
+                icon: "🎬",
+                category: "creative",
+                tools: {
+                    "Sora": { desc: "تولید ویدیوی سینمایی از متن (OpenAI)", url: "https://openai.com/sora" },
+                    "Runway Gen-3": { desc: "تولید و ویرایش ویدیو حرفه‌ای", url: "https://runwayml.com" },
+                    "Pika Labs": { desc: "ساخت ویدیوهای کوتاه از متن/تصویر", url: "https://pika.art" },
+                    "Kling": { desc: "تولید ویدیو چینی با کیفیت بالا", url: "https://kling.kuaishou.com" },
+                    "Luma Dream Machine": { desc: "تبدیل تصویر به ویدیو واقع‌گرایانه", url: "https://lumalabs.ai/dream-machine" },
+                    "HeyGen": { desc: "ساخت ویدیو با آواتار سخنگو", url: "https://www.heygen.com" },
+                    "Synthesia": { desc: "ویدیوهای آموزشی با آواتار AI", url: "https://www.synthesia.io" },
+                    "D-ID": { desc: "تبدیل عکس به ویدیوی سخنگو", url: "https://www.d-id.com" },
+                    "Invideo AI": { desc: "ساخت خودکار ویدیو از متن", url: "https://invideo.io" },
+                    "CapCut AI": { desc: "ویرایش هوشمند ویدیو", url: "https://www.capcut.com" },
+                    "Veo 2": { desc: "تولید ویدیو جدید گوگل", url: "https://deepmind.google/technologies/veo" }
+                }
+            },
+            "موسیقی و صدا": {
+                icon: "🎵",
+                category: "creative",
+                tools: {
+                    "Suno": { desc: "ساخت آهنگ کامل با خوانندگی از متن", url: "https://suno.com" },
+                    "Udio": { desc: "تولید موسیقی حرفه‌ای با سبک‌های مختلف", url: "https://www.udio.com" },
+                    "Mubert": { desc: "موسیقی بی‌کلام برای ویدیو و پادکست", url: "https://mubert.com" },
+                    "AIVA": { desc: "آهنگسازی کلاسیک و سینمایی", url: "https://www.aiva.ai" },
+                    "Boomy": { desc: "ساخت سریع موسیقی و انتشار در اسپاتیفای", url: "https://boomy.com" },
+                    "Soundraw": { desc: "موسیقی سفارشی برای تولید محتوا", url: "https://soundraw.io" },
+                    "Loudly": { desc: "ساخت موسیقی برای تبلیغات", url: "https://loudly.com" }
+                }
+            },
+            "صدا و گفتار": {
+                icon: "🎙️",
+                category: "content",
+                tools: {
+                    "ElevenLabs": { desc: "کلون صدا و تبدیل متن به گفتار واقعی", url: "https://elevenlabs.io" },
+                    "Whisper": { desc: "تبدیل گفتار به متن (ترنسکرایب)", url: "https://openai.com/research/whisper" },
+                    "Murf": { desc: "صداگذاری حرفه‌ای برای ویدیو", url: "https://murf.ai" },
+                    "Play.ht": { desc: "تبدیل متن به صدای طبیعی", url: "https://play.ht" },
+                    "Resemble AI": { desc: "کلون صدا و ساخت صدای سفارشی", url: "https://www.resemble.ai" },
+                    "Descript": { desc: "ویرایش صدا و حذف کلمات", url: "https://www.descript.com" },
+                    "Speechify": { desc: "تبدیل متن به صدا برای مطالعه", url: "https://speechify.com" },
+                    "Adobe Podcast": { desc: "بهبود کیفیت صدای ضبط شده", url: "https://podcast.adobe.com" }
+                }
+            },
+            "کدنویسی": {
+                icon: "💻",
+                category: "development",
+                tools: {
+                    "GitHub Copilot": { desc: "تکمیل خودکار کد در IDE", url: "https://github.com/features/copilot" },
+                    "Cursor": { desc: "ویرایشگر کد با AI داخلی", url: "https://cursor.sh" },
+                    "Replit AI": { desc: "کدنویسی آنلاین با کمک AI", url: "https://replit.com" },
+                    "Codeium": { desc: "جایگزین رایگان Copilot", url: "https://codeium.com" },
+                    "Tabnine": { desc: "پیشنهاد کد هوشمند", url: "https://www.tabnine.com" },
+                    "Amazon CodeWhisperer": { desc: "کدنویسی با تمرکز روی AWS", url: "https://aws.amazon.com/codewhisperer" },
+                    "Sourcegraph Cody": { desc: "جستجو و درک کدبیس", url: "https://sourcegraph.com/cody" },
+                    "Blackbox AI": { desc: "کپی کد از ویدیو و تصویر", url: "https://www.blackbox.ai" },
+                    "v0.dev": { desc: "ساخت UI از توضیحات متنی", url: "https://v0.dev" },
+                    "Bolt.new": { desc: "ساخت کامل اپلیکیشن با AI", url: "https://bolt.new" },
+                    "Lovable": { desc: "ساخت وب‌اپ بدون کدنویسی", url: "https://lovable.dev" }
+                }
+            },
+            "نویسندگی و محتوا": {
+                icon: "✍️",
+                category: "content",
+                tools: {
+                    "Jasper": { desc: "نوشتن محتوای مارکتینگ و تبلیغات", url: "https://www.jasper.ai" },
+                    "Copy.ai": { desc: "کپی‌رایتینگ و متن تبلیغاتی", url: "https://www.copy.ai" },
+                    "Writesonic": { desc: "مقاله، بلاگ و محتوای SEO", url: "https://writesonic.com" },
+                    "Rytr": { desc: "نویسندگی سریع و ارزان", url: "https://rytr.me" },
+                    "Notion AI": { desc: "نوشتن و سازماندهی در نوشن", url: "https://www.notion.so/product/ai" },
+                    "Grammarly": { desc: "اصلاح گرامر و نگارش انگلیسی", url: "https://www.grammarly.com" },
+                    "QuillBot": { desc: "پارافریز و بازنویسی متن", url: "https://quillbot.com" },
+                    "Sudowrite": { desc: "کمک به نوشتن داستان و رمان", url: "https://www.sudowrite.com" },
+                    "Wordtune": { desc: "بهبود سبک نوشتار", url: "https://www.wordtune.com" },
+                    "Hyperwrite": { desc: "دستیار نوشتن شخصی", url: "https://hyperwriteai.com" }
+                }
+            },
+            "کسب‌وکار و بهره‌وری": {
+                icon: "📊",
+                category: "business",
+                tools: {
+                    "Microsoft 365 Copilot": { desc: "AI در Word, Excel, PowerPoint", url: "https://www.microsoft.com/en-us/microsoft-365/enterprise/copilot" },
+                    "Google Workspace AI": { desc: "AI در Docs, Sheets, Gmail", url: "https://workspace.google.com/solutions/ai" },
+                    "Salesforce Einstein": { desc: "هوش مصنوعی برای CRM", url: "https://www.salesforce.com/products/einstein/overview" },
+                    "Zoom AI": { desc: "خلاصه جلسات و ترنسکرایب", url: "https://www.zoom.us/ai" },
+                    "Otter.ai": { desc: "ضبط و خلاصه جلسات", url: "https://otter.ai" },
+                    "Fireflies": { desc: "دستیار جلسات و یادداشت‌برداری", url: "https://fireflies.ai" },
+                    "Beautiful.ai": { desc: "ساخت پرزنتیشن خودکار", url: "https://www.beautiful.ai" },
+                    "Tome": { desc: "ساخت اسلاید از متن", url: "https://tome.app" },
+                    "Gamma": { desc: "ارائه و داکیومنت هوشمند", url: "https://gamma.app" },
+                    "Mem": { desc: "یادداشت‌برداری با AI", url: "https://mem.ai" },
+                    "Taskade": { desc: "مدیریت پروژه با AI", url: "https://www.taskade.com" }
+                }
+            },
+            "تحقیق و آموزش": {
+                icon: "🔬",
+                category: "research",
+                tools: {
+                    "Google NotebookLM": { desc: "تبدیل جزوات و فایل‌ها به پادکست و پرسش‌وپاسخ هوشمند", url: "https://notebooklm.google.com" },
+                    "Consensus": { desc: "جستجوی مقالات علمی با AI", url: "https://consensus.app" },
+                    "Elicit": { desc: "دستیار تحقیق و بررسی مقالات", url: "https://elicit.com" },
+                    "Scite": { desc: "بررسی استنادات علمی", url: "https://scite.ai" },
+                    "Semantic Scholar": { desc: "جستجوی هوشمند مقالات", url: "https://www.semanticscholar.org" },
+                    "ResearchRabbit": { desc: "کشف مقالات مرتبط", url: "https://www.researchrabbit.ai" },
+                    "Scholarcy": { desc: "خلاصه‌سازی مقالات علمی", url: "https://www.scholarcy.com" },
+                    "Khan Academy Khanmigo": { desc: "معلم خصوصی AI", url: "https://www.khanacademy.org/khan-labs" },
+                    "Duolingo Max": { desc: "یادگیری زبان با AI", url: "https://www.duolingo.com" },
+                    "Photomath": { desc: "حل مسائل ریاضی با دوربین", url: "https://photomath.com" },
+                    "Socratic": { desc: "کمک در تکالیف درسی", url: "https://socratic.org" }
+                }
+            },
+            "گیم و سرگرمی": {
+                icon: "🎮",
+                category: "creative",
+                tools: {
+                    "NVIDIA ACE": { desc: "شخصیت‌های NPC هوشمند در بازی", url: "https://developer.nvidia.com/ace" },
+                    "Inworld AI": { desc: "ساخت کاراکتر بازی با شخصیت", url: "https://inworld.ai" },
+                    "Scenario": { desc: "ساخت اَست گیم با AI", url: "https://www.scenario.com" },
+                    "Ludo.ai": { desc: "ایده‌پردازی برای بازی‌سازی", url: "https://ludo.ai" },
+                    "Promethean AI": { desc: "طراحی محیط بازی", url: "https://www.prometheanai.com" }
+                }
+            },
+            "سلامت و پزشکی": {
+                icon: "🏥",
+                category: "advanced",
+                tools: {
+                    "Med-PaLM": { desc: "پاسخ به سوالات پزشکی (گوگل)", url: "https://sites.research.google/med-palm" },
+                    "IBM Watson Health": { desc: "تحلیل داده‌های پزشکی", url: "https://www.ibm.com/industries/healthcare" },
+                    "PathAI": { desc: "تشخیص بیماری از تصاویر پاتولوژی", url: "https://www.pathai.com" },
+                    "Viz.ai": { desc: "تشخیص سکته از CT اسکن", url: "https://www.viz.ai" },
+                    "Ada Health": { desc: "بررسی علائم بیماری", url: "https://ada.com" },
+                    "Babylon Health": { desc: "مشاوره پزشکی اولیه", url: "https://www.babylonhealth.com" }
+                }
+            },
+            "خودرو و حمل‌ونقل": {
+                icon: "🚗",
+                category: "advanced",
+                tools: {
+                    "Tesla Autopilot/FSD": { desc: "رانندگی خودکار تسلا", url: "https://www.tesla.com/autopilot" },
+                    "Waymo": { desc: "تاکسی خودران گوگل", url: "https://waymo.com" },
+                    "Cruise": { desc: "خودروهای خودران GM", url: "https://getcruise.com" },
+                    "Mobileye": { desc: "سیستم کمک‌راننده اینتل", url: "https://www.mobileye.com" }
+                }
+            },
+            "ویرایش تصویر": {
+                icon: "🖼️",
+                category: "creative",
+                tools: {
+                    "Adobe Photoshop AI": { desc: "Generative Fill و ویرایش هوشمند", url: "https://www.adobe.com/products/photoshop/generative-fill.html" },
+                    "Remove.bg": { desc: "حذف پس‌زمینه خودکار", url: "https://www.remove.bg" },
+                    "Cleanup.pictures": { desc: "حذف اشیاء ناخواسته از عکس", url: "https://cleanup.pictures" },
+                    "Topaz AI": { desc: "افزایش کیفیت و رفع نویز عکس", url: "https://www.topazlabs.com" },
+                    "Remini": { desc: "بهبود کیفیت عکس‌های قدیمی", url: "https://remini.ai" },
+                    "Luminar Neo": { desc: "ویرایش عکس با AI", url: "https://skylum.com/luminar" },
+                    "Photoroom": { desc: "ویرایش عکس محصول برای فروشگاه", url: "https://www.photoroom.com" },
+                    "Clipdrop": { desc: "مجموعه ابزار ویرایش تصویر", url: "https://clipdrop.co" },
+                    "Magnific AI": { desc: "آپسکیل تصویر با جزئیات", url: "https://magnific.ai" }
+                }
+            },
+            "ساخت آواتار و 3D": {
+                icon: "🎭",
+                category: "creative",
+                tools: {
+                    "Ready Player Me": { desc: "ساخت آواتار 3D برای متاورس", url: "https://readyplayer.me" },
+                    "Lensa AI": { desc: "ساخت آواتار هنری از سلفی", url: "https://prisma-ai.com/lensa" },
+                    "Wonder Dynamics": { desc: "اضافه کردن کاراکتر CGI به ویدیو", url: "https://wonderdynamics.com" },
+                    "Kaedim": { desc: "تبدیل تصویر 2D به مدل 3D", url: "https://www.kaedim3d.com" },
+                    "Meshy": { desc: "ساخت مدل 3D از متن", url: "https://www.meshy.ai" },
+                    "Spline AI": { desc: "طراحی 3D با AI", url: "https://spline.design/ai" }
+                }
+            },
+            "ترجمه و زبان": {
+                icon: "📱",
+                category: "content",
+                tools: {
+                    "DeepL": { desc: "ترجمه با کیفیت بالا", url: "https://www.deepl.com" },
+                    "Google Translate": { desc: "ترجمه ۱۰۰+ زبان رایگان", url: "https://translate.google.com" },
+                    "Papago": { desc: "ترجمه زبان‌های آسیایی", url: "https://papago.naver.com" },
+                    "Rask AI": { desc: "دوبله ویدیو به زبان‌های مختلف", url: "https://rask.ai" },
+                    "Captions": { desc: "زیرنویس خودکار ویدیو", url: "https://www.captions.ai" }
+                }
+            },
+            "امنیت و حریم خصوصی": {
+                icon: "🔒",
+                category: "advanced",
+                tools: {
+                    "Darktrace": { desc: "تشخیص تهدیدات سایبری", url: "https://darktrace.com" },
+                    "CrowdStrike": { desc: "محافظت از endpoint با AI", url: "https://www.crowdstrike.com" },
+                    "Vectra AI": { desc: "شناسایی حملات شبکه", url: "https://www.vectra.ai" }
+                }
+            },
+            "دیتا و تحلیل": {
+                icon: "📈",
+                category: "business",
+                tools: {
+                    "Tableau AI": { desc: "تحلیل داده بصری", url: "https://www.tableau.com" },
+                    "ThoughtSpot": { desc: "جستجوی داده با زبان طبیعی", url: "https://www.thoughtspot.com" },
+                    "MonkeyLearn": { desc: "تحلیل متن و احساسات", url: "https://monkeylearn.com" },
+                    "Obviously AI": { desc: "پیش‌بینی بدون کد", url: "https://www.obviously.ai" },
+                    "Julius AI": { desc: "تحلیل داده با چت", url: "https://julius.ai" }
+                }
+            },
+            "تجارت الکترونیک": {
+                icon: "🛒",
+                category: "business",
+                tools: {
+                    "Shopify Magic": { desc: "نوشتن توضیحات محصول", url: "https://www.shopify.com/magic" },
+                    "Nosto": { desc: "شخصی‌سازی تجربه خرید", url: "https://www.nosto.com" },
+                    "Vue.ai": { desc: "مدیریت محصول خودکار", url: "https://vue.ai" },
+                    "Phrasee": { desc: "نوشتن ایمیل مارکتینگ", url: "https://phrasee.co" }
+                }
+            },
+            "رباتیک و سخت‌افزار": {
+                icon: "🤖",
+                category: "advanced",
+                tools: {
+                    "Boston Dynamics": { desc: "ربات‌های متحرک پیشرفته", url: "https://www.bostondynamics.com" },
+                    "Figure": { desc: "ربات انسان‌نما برای کار", url: "https://www.figure.ai" },
+                    "Sanctuary AI": { desc: "ربات با هوش عمومی", url: "https://www.sanctuary.ai" },
+                    "1X": { desc: "ربات‌های خانگی", url: "https://www.1x.tech" }
+                }
+            },
+            "پلتفرم‌های ML": {
+                icon: "🧠",
+                category: "development",
+                tools: {
+                    "Google AI Studio": { desc: "پلتفرم توسعه و پروتوتایپ سریع با مدل‌های Gemini", url: "https://aistudio.google.com" },
+                    "Hugging Face": { desc: "مدل‌های آماده و دیتاست", url: "https://huggingface.co" },
+                    "Google Vertex AI": { desc: "توسعه مدل روی گوگل کلود", url: "https://cloud.google.com/vertex-ai" },
+                    "AWS SageMaker": { desc: "آموزش مدل روی آمازون", url: "https://aws.amazon.com/sagemaker" },
+                    "Azure ML": { desc: "پلتفرم ML مایکروسافت", url: "https://azure.microsoft.com/en-us/products/machine-learning" },
+                    "Weights & Biases": { desc: "ترکینگ آزمایش‌های ML", url: "https://wandb.ai" },
+                    "Replicate": { desc: "اجرای مدل‌ها با API", url: "https://replicate.com" }
+                }
+            },
+            "سوشال مدیا": {
+                icon: "💬",
+                category: "business",
+                tools: {
+                    "Lately": { desc: "ساخت پست از محتوای طولانی", url: "https://www.lately.ai" },
+                    "Ocoya": { desc: "زمان‌بندی و تولید محتوا", url: "https://www.ocoya.com" },
+                    "Predis.ai": { desc: "طراحی پست سوشال", url: "https://predis.ai" },
+                    "Publer": { desc: "مدیریت شبکه‌های اجتماعی", url: "https://publer.io" },
+                    "Taplio": { desc: "رشد در لینکدین", url: "https://taplio.com" },
+                    "Tweet Hunter": { desc: "رشد در توییتر", url: "https://tweethunter.io" }
+                }
+            },
+            "استریم و پادکست": {
+                icon: "🎥",
+                category: "content",
+                tools: {
+                    "Podcastle": { desc: "ضبط و ویرایش پادکست", url: "https://podcastle.ai" },
+                    "Riverside": { desc: "ضبط ویدیو با کیفیت بالا", url: "https://riverside.fm" },
+                    "Descript": { desc: "ویرایش ویدیو/پادکست با متن", url: "https://www.descript.com" },
+                    "Opus Clip": { desc: "برش کلیپ از ویدیوی طولانی", url: "https://www.opus.pro" },
+                    "Vizard": { desc: "تبدیل ویدیو به کلیپ کوتاه", url: "https://vizard.ai" }
+                }
+            },
+            "طراحی داخلی": {
+                icon: "🏠",
+                category: "creative",
+                tools: {
+                    "Interior AI": { desc: "طراحی مجدد اتاق با AI", url: "https://interiorai.com" },
+                    "RoomGPT": { desc: "پیشنهاد دکوراسیون", url: "https://www.roomgpt.io" },
+                    "Planner 5D": { desc: "طراحی خانه با AI", url: "https://planner5d.com" }
+                }
+            }
+        };
+
+        // --- منطق صفحه اصلی (AI Tools) ---
+        const container = document.getElementById('categoriesContainer');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+
+        function renderCategories(filterText = '', categoryFilter = 'all') {
+            container.innerHTML = '';
+            
+            for (const [category, info] of Object.entries(data)) {
+                const matchesCategory = category.toLowerCase().includes(filterText.toLowerCase());
+                const matchingTools = Object.entries(info.tools).filter(([name, toolData]) => 
+                    name.toLowerCase().includes(filterText.toLowerCase()) || 
+                    toolData.desc.toLowerCase().includes(filterText.toLowerCase())
+                );
+                const categoryMatches = categoryFilter === 'all' || info.category === categoryFilter;
+
+                if ((matchesCategory || matchingTools.length > 0 || filterText === '') && categoryMatches) {
+                    const card = document.createElement('div');
+                    card.className = 'category-card';
+                    
+                    let toolsHTML = '';
+                    const toolsToShow = filterText ? matchingTools : Object.entries(info.tools);
+                    
+                    toolsToShow.forEach(([name, toolData]) => {
+                        toolsHTML += `
+                            <a href="${toolData.url}" target="_blank" class="tool-item">
+                                <div class="tool-name">${name}</div>
+                                <div class="tool-desc">${toolData.desc}</div>
+                            </a>
+                        `;
+                    });
+
+                    card.innerHTML = `
+                        <span class="category-icon">${info.icon}</span>
+                        <div class="category-title">${category}</div>
+                        <div class="tools-list">${toolsHTML}</div>
+                        <div class="expand-btn">⬇ نمایش ابزارها ⬇</div>
+                    `;
+
+                    // باز و بسته شدن آکاردئون (جلوگیری از تداخل با لینک)
+                    card.addEventListener('click', function(e) {
+                        if(!e.target.closest('.tool-item')) {
+                            this.classList.toggle('active');
+                        }
+                    });
+
+                    container.appendChild(card);
+                }
+            }
+        }
+
+        // ایونت لیسنرها برای فیلتر و سرچ صفحه اول
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderCategories('', currentFilter);
+            });
+        });
+        searchInput.addEventListener('input', (e) => renderCategories(e.target.value, currentFilter));
         
-        let logoContent = tool.name.charAt(0).toUpperCase();
-        if (isStudent) logoContent = '🎓';
-        if (isDataset) logoContent = '💾';
+        // اجرای اولیه صفحه اول
+        renderCategories();
 
-        // تعیین رنگ لوگو
-        let logoColor = stringToColor(tool.name);
-        if (isStudent) logoColor = 'var(--student)';
-        if (isDataset) logoColor = 'var(--dataset)';
 
-        logoDiv.style.backgroundColor = logoColor;
-        logoDiv.textContent = logoContent;
+        /* ==========================================
+           2. منطق صفحه پروژه‌های دانشجویی
+           ========================================== */
+        
+        // لیست پروژه‌های پیش‌فرض
+        const defaultProjects = [
+          {
+            name: "Diabetes Predictor",
+            url: "https://github.com/mohammad-re2004/diabetes_predictor_app",
+            author: "Mohammad-Reza",
+            cat: ["Python","Streamlit","Prediction"],
+            desc: "اپلیکیشن پیش‌بینی دیابت."
+          },
+          {
+            name: "BrainVision AI",
+            url: "https://alij-official.github.io/BrainVision-AI/",
+            author: "علی جلیلیان",
+            cat: ["Computer Vision","Web App"],
+            desc: "پلتفرم بینایی ماشین."
+          },
+          {
+            name: "Medical Ruleset Visualizer",
+            url: "https://mr-amirasgari.github.io/medical-ruleset-visualizer/",
+            author: "امیرمحمد عسگری",
+            cat: ["Medical","Ruleset","Visualization"],
+            desc: "مصورسازی قوانین پزشکی."
+          },
+          {
+            name: "سیستم تشخیص دیابت",
+            url: "https://mr-amirasgari.github.io/diabet/",
+            author: "امیرمحمد عسگری",
+            cat: ["Health","Diabetes","Ruleset"],
+            desc: "سیستم قانون‌محور تشخیص دیابت."
+          },
+          {
+            name: "سیستم قانون‌محور تشخیص دیابت",
+            url: "https://fatemebabaei3813-oss.github.io/diabet/",
+            author: "فاطمه بابایی",
+            cat: ["Health","Diabetes","Ruleset"],
+            desc: "سیستم قانون‌محور برای تشخیص و غربالگری دیابت."
+          }
+        ];
 
-        const h3 = document.createElement('h3');
-        h3.textContent = tool.name;
+        // ترکیب پروژه‌های پیش‌فرض با پروژه‌های ذخیره شده در مرورگر
+        let allProjects = [...defaultProjects];
+        const savedProjects = localStorage.getItem('userProjects');
+        if (savedProjects) {
+            allProjects = [...allProjects, ...JSON.parse(savedProjects)];
+        }
 
-        const p = document.createElement('p');
-        p.textContent = tool.desc;
+        function renderProjects(list) {
+            const g = document.getElementById("projectGrid");
+            g.innerHTML = "";
+            list.forEach(p => {
+                const c = document.createElement("div");
+                c.className = "project-card";
+                c.onclick = () => window.open(p.url, "_blank");
+                c.innerHTML = `
+                    <div class="logo-placeholder">🎓</div>
+                    <h3>${p.name}</h3>
+                    <span class="student-author">دانشجو: <strong>${p.author}</strong></span>
+                    <p>${p.desc}</p>
+                    <div class="tags">${p.cat.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+                `;
+                g.appendChild(c);
+            });
+        }
 
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'tags';
-        tool.cat.forEach(c => {
-          const tag = document.createElement('span');
-          let tagClass = 'tag';
-          
-          if (c === 'Student Projects') tagClass += ' project-tag';
-          if (c === 'Dataset') tagClass += ' dataset-tag';
-          if (tool.persian) tagClass += ' persian';
-          
-          tag.className = tagClass;
-          tag.textContent = c;
-          tagsDiv.appendChild(tag);
+        // سرچ پروژه‌ها
+        document.getElementById("projectSearch").addEventListener("input", e => {
+            const t = e.target.value.toLowerCase();
+            renderProjects(allProjects.filter(p =>
+                p.name.toLowerCase().includes(t) ||
+                p.author.toLowerCase().includes(t) ||
+                p.desc.toLowerCase().includes(t)
+            ));
         });
 
-        card.appendChild(logoDiv);
-        card.appendChild(h3);
-        card.appendChild(p);
-        card.appendChild(tagsDiv);
-        grid.appendChild(card);
-      });
-    }
+        // افزودن پروژه جدید
+        function addNewProject() {
+            const name = document.getElementById('newPName').value;
+            const author = document.getElementById('newPAuthor').value;
+            const url = document.getElementById('newPUrl').value;
+            const desc = document.getElementById('newPDesc').value;
+            const tagsInput = document.getElementById('newPTags').value;
 
-    function filterByCategory(category) {
-      activeCategory = activeCategory === category ? null : category;
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.category === category && activeCategory === category);
-      });
+            if(!name || !author || !url) {
+                alert("لطفاً فیلدهای اصلی (نام، دانشجو و لینک) را پر کنید.");
+                return;
+            }
 
-      let filtered = aiTools;
-      if (activeCategory) {
-        filtered = aiTools.filter(t => t.cat.includes(activeCategory));
-      }
+            const newProject = {
+                name: name,
+                author: author,
+                url: url,
+                desc: desc,
+                cat: tagsInput ? tagsInput.split(',').map(t => t.trim()) : ["User Project"]
+            };
 
-      const term = document.getElementById('search').value.toLowerCase();
-      if (term) {
-        filtered = filtered.filter(t =>
-          t.name.toLowerCase().includes(term) ||
-          t.desc.toLowerCase().includes(term)
-        );
-      }
+            // افزودن به لیست
+            allProjects.push(newProject);
+            
+            // ذخیره در مرورگر
+            let userProjects = JSON.parse(localStorage.getItem('userProjects') || "[]");
+            userProjects.push(newProject);
+            localStorage.setItem('userProjects', JSON.stringify(userProjects));
 
-      renderTools(filtered);
-    }
+            // پاکسازی فرم
+            document.getElementById('newPName').value = '';
+            document.getElementById('newPAuthor').value = '';
+            document.getElementById('newPUrl').value = '';
+            document.getElementById('newPDesc').value = '';
+            document.getElementById('newPTags').value = '';
+            
+            renderProjects(allProjects);
+            alert("پروژه با موفقیت ثبت شد!");
+        }
 
-    document.getElementById('search').addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase();
-      let filtered = aiTools;
-      if (activeCategory) {
-        filtered = aiTools.filter(t => t.cat.includes(activeCategory));
-      }
-      filtered = filtered.filter(t =>
-        t.name.toLowerCase().includes(term) ||
-        t.desc.toLowerCase().includes(term)
-      );
-      renderTools(filtered);
-    });
+        // --- توابع تغییر صفحه ---
+        function showProjectsPage() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('projectsPage').style.display = 'block';
+            window.scrollTo(0, 0);
+            renderProjects(allProjects);
+        }
 
-    renderTools(aiTools);
-  </script>
+        function showMainPage() {
+            document.getElementById('projectsPage').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+    </script>
 </body>
 </html>
