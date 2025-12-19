@@ -116,21 +116,6 @@
         .student-author { display: block; margin: 10px 0; color: #555; font-size: 0.95em; background: #f0f0f0; padding: 5px 10px; border-radius: 8px; width: fit-content;}
         .tags { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 5px; }
         .tag { background: #667eea; color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.8em; }
-        
-        /* فرم افزودن پروژه */
-        .add-project-form {
-            background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 20px; margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-        }
-        .form-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-        .form-input {
-            flex: 1; padding: 12px; border-radius: 10px; border: none; min-width: 200px; font-family: inherit;
-        }
-        .submit-btn {
-            background: #4ade80; color: #064e3b; padding: 12px 30px; border: none; border-radius: 10px;
-            font-weight: bold; cursor: pointer; width: 100%; transition: background 0.3s; font-size: 1.1em;
-        }
-        .submit-btn:hover { background: #22c55e; }
 
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -188,7 +173,7 @@
         </div>
 
         <!-- =========================================
-             صفحه دوم: پروژه‌های دانشجویی (ابتدا مخفی)
+             صفحه دوم: پروژه‌های دانشجویی (بدون فرم آپلود)
              ========================================= -->
         <div id="projectsPage">
             <button class="back-btn" onclick="showMainPage()">🔙 بازگشت به لیست هوش مصنوعی</button>
@@ -201,22 +186,7 @@
                 </div>
             </header>
 
-            <!-- فرم ثبت پروژه جدید -->
-            <div class="add-project-form">
-                <h3 style="color:white; margin-bottom:15px;">➕ ثبت پروژه جدید (ذخیره در مرورگر شما)</h3>
-                <div class="form-row">
-                    <input id="newPName" class="form-input" placeholder="نام پروژه (مثال: تشخیص دیابت)" required>
-                    <input id="newPAuthor" class="form-input" placeholder="نام دانشجو" required>
-                </div>
-                <div class="form-row">
-                    <input id="newPUrl" class="form-input" placeholder="لینک پروژه (GitHub یا وب‌سایت)" required>
-                    <input id="newPTags" class="form-input" placeholder="تگ‌ها (با ویرگول جدا کنید: Python, AI)">
-                </div>
-                <div class="form-row">
-                    <input id="newPDesc" class="form-input" placeholder="توضیح کوتاه پروژه..." required>
-                </div>
-                <button class="submit-btn" onclick="addNewProject()">ثبت و نمایش در لیست</button>
-            </div>
+            <!-- فرم ثبت پروژه حذف شد تا فقط ادمین بتواند از طریق سورس کد پروژه اضافه کند -->
 
             <!-- لیست پروژه‌ها اینجا پر می‌شود -->
             <div id="projectGrid" class="project-grid"></div>
@@ -230,7 +200,7 @@
 
     <script>
         /* ==========================================
-           1. داده‌های کامل هوش مصنوعی (اصلاح شده)
+           1. داده‌های کامل هوش مصنوعی
            ========================================== */
         const data = {
             "چت‌بات‌ها و دستیارهای متنی": {
@@ -608,7 +578,7 @@
            2. منطق صفحه پروژه‌های دانشجویی
            ========================================== */
         
-        // لیست پروژه‌های پیش‌فرض
+        // لیست پروژه‌های پیش‌فرض (فقط همین‌ها نمایش داده می‌شوند)
         const defaultProjects = [
           {
             name: "Diabetes Predictor",
@@ -647,12 +617,8 @@
           }
         ];
 
-        // ترکیب پروژه‌های پیش‌فرض با پروژه‌های ذخیره شده در مرورگر
-        let allProjects = [...defaultProjects];
-        const savedProjects = localStorage.getItem('userProjects');
-        if (savedProjects) {
-            allProjects = [...allProjects, ...JSON.parse(savedProjects)];
-        }
+        // چون قابلیت آپلود را حذف کردیم، فقط پروژه‌های دیفالت را نشان می‌دهیم
+        const allProjects = defaultProjects;
 
         function renderProjects(list) {
             const g = document.getElementById("projectGrid");
@@ -681,46 +647,6 @@
                 p.desc.toLowerCase().includes(t)
             ));
         });
-
-        // افزودن پروژه جدید
-        function addNewProject() {
-            const name = document.getElementById('newPName').value;
-            const author = document.getElementById('newPAuthor').value;
-            const url = document.getElementById('newPUrl').value;
-            const desc = document.getElementById('newPDesc').value;
-            const tagsInput = document.getElementById('newPTags').value;
-
-            if(!name || !author || !url) {
-                alert("لطفاً فیلدهای اصلی (نام، دانشجو و لینک) را پر کنید.");
-                return;
-            }
-
-            const newProject = {
-                name: name,
-                author: author,
-                url: url,
-                desc: desc,
-                cat: tagsInput ? tagsInput.split(',').map(t => t.trim()) : ["User Project"]
-            };
-
-            // افزودن به لیست
-            allProjects.push(newProject);
-            
-            // ذخیره در مرورگر
-            let userProjects = JSON.parse(localStorage.getItem('userProjects') || "[]");
-            userProjects.push(newProject);
-            localStorage.setItem('userProjects', JSON.stringify(userProjects));
-
-            // پاکسازی فرم
-            document.getElementById('newPName').value = '';
-            document.getElementById('newPAuthor').value = '';
-            document.getElementById('newPUrl').value = '';
-            document.getElementById('newPDesc').value = '';
-            document.getElementById('newPTags').value = '';
-            
-            renderProjects(allProjects);
-            alert("پروژه با موفقیت ثبت شد!");
-        }
 
         // --- توابع تغییر صفحه ---
         function showProjectsPage() {
