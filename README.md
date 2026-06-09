@@ -34,3 +34,8 @@
 2. 
 ```bash
 https://mr-amirasgari.github.io/ai-chatbot-directory/
+
+---
+
+Created by **Amir Mohammad Asgari | امیرمحمد عسگری**  
+Official website: [https://www.am-asgari.ir/](https://www.am-asgari.ir/)
