@@ -1,41 +1,146 @@
-# 🤖 AI Chatbot Directory  
-### فهرست جامع ربات‌های چت و ابزارهای بازنویسی هوش مصنوعی
+<div align="center">
 
-[![Static Badge](https://img.shields.io/badge/HTML5-%23E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
-[![Static Badge](https://img.shields.io/badge/CSS3-%231572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Static Badge](https://img.shields.io/badge/JavaScript-%23F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-222222?logo=github)](https://YOUR-GITHUB-USERNAME.github.io/ai-chatbot-directory)
+# AI Chatbot Directory
 
-یک دایرکتوری تعاملی، واکنش‌گرا و مینیمال از **شناخته‌شده‌ترین ربات‌های چت هوش مصنوعی** و **ابزارهای بازنویسی متن** — طراحی شده برای کاربران فارسی‌زبان و توسعه‌دهندگان.
+A Persian, responsive, and searchable directory of AI tools and selected student projects.
 
-✅ پشتیبانی از زبان فارسی (راست‌به‌چپ)  
-✅ جستجو و فیلتر هوشمند بر اساس دسته‌بندی  
-✅ کلیک برای انتقال مستقیم به صفحهٔ رسمی هر ابزار  
-✅ بدون نیاز به سرور — کاملاً استاتیک  
-✅ طراحی مدرن، تمیز و موبایل‌فرندلی  
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-222222?style=for-the-badge&logo=github)
+
+</div>
 
 ---
 
-## 🔍 ویژگی‌ها
+## Overview
 
-- **دسته‌بندی‌های هوشمند**: متن‌ساز، بازنویسی، تولید تصویر، تحلیل سند، کدنویسی، چندزبانه و...
-- **ابزارهای فارسی**: شامل TextFixer، Qwen و سایر ابزارهای پشتیبان از RTL
-- **ربات‌های جهانی**: ChatGPT، Claude، Gemini، Grok، Poe، Kimi، Perplexity، Copilot و ...
-- **کارت‌های تعاملی**: هر کارت با کلیک به صفحهٔ رسمی ابزار هدایت می‌شود
-- **بدون فریم‌ورک**: فقط HTML + CSS + JavaScript خالص — کد تمیز و ماژولار
+AI Chatbot Directory is a static single-page website that organizes AI tools into searchable categories.
 
----
+The interface is designed for Persian-speaking users and supports right-to-left layout, category filtering, expandable tool cards, and a separate section for selected student projects.
 
-## 🚀 نحوه استفاده
+## Live Demo
 
-1. ریپو را کلون کنید:
-   ```bash
-   git clone https://github.com/mr-amirasgari/ai-chatbot-directory
-2. 
+[Open the live website](https://mr-amirasgari.github.io/ai-chatbot-directory/)
+
+## Features
+
+- Persian RTL interface
+- Search by tool name, description, or category
+- Category-based filtering
+- Expandable tool collections
+- Dynamic tool and category statistics
+- Selected student-project directory
+- Responsive layout
+- Safe external links
+- No backend or database required
+- No external JavaScript framework
+
+## Project Structure
+
+```text
+ai-chatbot-directory/
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       ├── app.js
+│       └── data.js
+├── .gitignore
+├── index.html
+└── README.md
+```
+
+## File Responsibilities
+
+| File | Purpose |
+|---|---|
+| `index.html` | Page structure and content containers |
+| `assets/css/styles.css` | Layout, responsive design, animations, and visual styles |
+| `assets/js/data.js` | AI-tool categories and student-project data |
+| `assets/js/app.js` | Search, filters, rendering, navigation, and statistics |
+
+## Run Locally
+
+Clone the repository:
+
 ```bash
-https://mr-amirasgari.github.io/ai-chatbot-directory/
+git clone https://github.com/mr-amirasgari/ai-chatbot-directory.git
+cd ai-chatbot-directory
+```
 
----
+Open `index.html` directly in a modern browser.
 
-Created by **Amir Mohammad Asgari | امیرمحمد عسگری**  
-Official website: [https://www.am-asgari.ir/](https://www.am-asgari.ir/)
+You can also run a local server:
+
+```bash
+python -m http.server 8000
+```
+
+Then open:
+
+```text
+http://localhost:8000
+```
+
+## Adding an AI Tool
+
+Open:
+
+```text
+assets/js/data.js
+```
+
+Add the tool inside the appropriate category:
+
+```javascript
+"Tool Name": {
+    desc: "Short Persian description",
+    url: "https://example.com"
+}
+```
+
+## Adding a Student Project
+
+Add a new object to the `defaultProjects` array in `assets/js/data.js`:
+
+```javascript
+{
+    name: "Project Name",
+    url: "https://example.com",
+    author: "Student Name",
+    cat: ["Python", "Machine Learning"],
+    desc: "Short project description."
+}
+```
+
+## Technologies
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- GitHub Pages
+
+## Notes
+
+- Tool names, services, URLs, and availability may change over time.
+- Inclusion in this directory does not imply endorsement.
+- Users should review each service's pricing, privacy policy, and terms independently.
+
+## Possible Improvements
+
+- Add automatic broken-link checking
+- Add English localization
+- Add favorites using LocalStorage
+- Add sort options
+- Add tool logos
+- Add accessibility improvements
+- Move data to JSON files
+- Add automated JavaScript tests
+
+## Author
+
+**Amir Mohammad Asgari**
+
+[GitHub Profile](https://github.com/mr-amirasgari)  
+[Official Website](https://www.am-asgari.ir/)
