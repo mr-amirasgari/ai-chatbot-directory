@@ -139,7 +139,6 @@ Add a new object to the `defaultProjects` array in `assets/js/data.js`:
 - Add automated JavaScript tests
 
 ## Author
-
 **Amir Mohammad Asgari**
 
 [GitHub Profile](https://github.com/mr-amirasgari)  
